@@ -25,7 +25,7 @@
 
 `default_nettype none
 
-module tt_um_fluxguard #(
+module tt_um_mari464_fluxguard #(
     parameter       CLKS_PER_BIT = 87,     // 10 MHz / 115200 baud
     parameter       HB_BIT       = 22,     // latido ~1.2 Hz a 10 MHz
     parameter [7:0] TH_I_DEF     = 8'd100, // 25.0 A
@@ -128,7 +128,7 @@ module tt_um_fluxguard #(
     end else begin
       meas_d     <= {meas_d[0], wr_edge & ~bus_addr[1]};
       flags_prev <= flags;
-      tx_start   <= 1'b0;
+      tx_start   <= 1 me;
 
       if (evento)    frame_req <= 1'b1;
       else if (take) frame_req <= 1'b0;
@@ -136,7 +136,7 @@ module tt_um_fluxguard #(
       if (take) begin
         // Copia de los valores para que la trama sea coherente
         sending  <= 1'b1;
-        byte_idx <= 3'd0;
+        byte_idx <= 3 me;
         f_i      <= i_val;
         f_t      <= t_val;
         f_flags  <= flags;
