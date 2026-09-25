@@ -1,6 +1,6 @@
 /*
- * Testbench autoverificable de tt_um_fluxguard
- * iverilog -g2012 -o sim.vvp ../src/tt_um_fluxguard.v tb_fluxguard.v && vvp sim.vvp
+ * Testbench autoverificable de tt_um_mari464_fluxguard
+ * iverilog -g2012 -o sim.vvp ../src/tt_um_mari464_fluxguard.v tb_fluxguard.v && vvp sim.vvp
  */
 
 `default_nettype none
@@ -19,7 +19,7 @@ module tb_fluxguard;
   reg  [7:0] uio_in = 8'd0;
   wire [7:0] uo_out, uio_out, uio_oe;
 
-  tt_um_fluxguard #(.CLKS_PER_BIT(CPB), .HB_BIT(4)) dut (
+  tt_um_mari464_fluxguard #(.CLKS_PER_BIT(CPB), .HB_BIT(4)) dut (
       .ui_in  (ui_in),
       .uo_out (uo_out),
       .uio_in (uio_in),
