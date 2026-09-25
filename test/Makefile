@@ -24,7 +24,7 @@ module tb ();
   wire [7:0] uio_oe;
 
   // Instancia del chip FluxGuard
-  tt_um_fluxguard user_project (
+  tt_um_mari464_fluxguard user_project (
       .ui_in  (ui_in),    // Dedicated inputs
       .uo_out (uo_out),   // Dedicated outputs
       .uio_in (uio_in),   // IOs: Input path
