@@ -1,8 +1,15 @@
 ![](../../workflows/gds/badge.svg) ![](../../workflows/docs/badge.svg) ![](../../workflows/test/badge.svg) ![](../../workflows/fpga/badge.svg)
 
-# Tiny Tapeout Verilog Project Template
+# FluxGuard — ASIC de protección para tableros eléctricos
 
-- [Read the documentation for project](docs/info.md)
+Monitor de sobrecorriente y sobretemperatura para Tiny Tapeout. Un transformador de corriente SCT-013 y un
+comparador de ventana externo alimentan un **camino rápido por hardware** que dispara `TRIP` en ~1.4 µs, sin
+depender del microcontrolador. Un ESP32 escribe las lecturas RMS y la temperatura, recibe el estado por UART y lo
+publica en la nube por MQTT.
+
+- [Documentación del proyecto](docs/info.md)
+
+![Esquemático integrado](docs/fluxguard_esquematico.svg)
 
 ## What is Tiny Tapeout?
 

@@ -10,6 +10,9 @@ CLKS_PER_BIT = 87  # valor por defecto del diseno: 10 MHz / 115200 baud
 # Direcciones del bus
 ADDR_I, ADDR_T, ADDR_TH_I, ADDR_TH_T = 0, 1, 2, 3
 
+# uio[4] = PEAK_N (activo en bajo, con pull-up en la tarjeta): en reposo vale 1
+IDLE = 0b0001_0000
+
 
 def out_bit(dut, n):
     return (int(dut.uo_out.value) >> n) & 1
@@ -35,19 +38,26 @@ async def uart_rx(dut, rx):
 
 async def bus_write(dut, addr, data):
     dut.ui_in.value = data
-    dut.uio_in.value = addr
+    dut.uio_in.value = IDLE | addr
     await ClockCycles(dut.clk, 1)
-    dut.uio_in.value = addr | 0b0100  # WR = 1
+    dut.uio_in.value = IDLE | addr | 0b0100  # WR = 1
     await ClockCycles(dut.clk, 4)
-    dut.uio_in.value = addr
+    dut.uio_in.value = IDLE | addr
     await ClockCycles(dut.clk, 4)
 
 
 async def pulse_clr(dut):
-    dut.uio_in.value = 0b1000  # CLR = 1
+    dut.uio_in.value = IDLE | 0b1000  # CLR = 1
     await ClockCycles(dut.clk, 4)
-    dut.uio_in.value = 0
+    dut.uio_in.value = IDLE
     await ClockCycles(dut.clk, 4)
+
+
+async def peak_pulse(dut, n):
+    """PEAK_N en bajo durante n ciclos (comparador del SCT-013 detecta un pico)."""
+    dut.uio_in.value = IDLE & ~0b0001_0000
+    await ClockCycles(dut.clk, n)
+    dut.uio_in.value = IDLE
 
 
 async def expect_frame(dut, rx, ei, et, ef):
@@ -76,7 +86,7 @@ async def test_project(dut):
     dut._log.info("Reset")
     dut.ena.value = 1
     dut.ui_in.value = 0
-    dut.uio_in.value = 0
+    dut.uio_in.value = IDLE
     dut.rst_n.value = 0
     await ClockCycles(dut.clk, 10)
     dut.rst_n.value = 1
@@ -122,3 +132,19 @@ async def test_project(dut):
     await expect_frame(dut, rx, 90, 75, 0x06)
     assert out_bit(dut, 0) == 1, "ALERT"
     assert out_bit(dut, 2) == 1, "OVER_T"
+
+    dut._log.info("SCT-013: glitch de 4 ciclos se ignora")
+    await peak_pulse(dut, 4)
+    await ClockCycles(dut.clk, 20)
+    assert out_bit(dut, 7) == 0, "glitch no debe activar TRIP"
+
+    dut._log.info("SCT-013: pico real dispara TRIP por hardware")
+    await peak_pulse(dut, 12)
+    await ClockCycles(dut.clk, 4)
+    assert out_bit(dut, 7) == 1, "TRIP"
+    assert out_bit(dut, 0) == 1, "ALERT"
+    await expect_frame(dut, rx, 90, 75, 0x1E)  # TRIP | OVER_PK | LATCHED | OVER_T
+
+    dut._log.info("CLR no rearma mientras haya picos recientes")
+    await pulse_clr(dut)
+    assert out_bit(dut, 7) == 1, "TRIP sigue activo"
