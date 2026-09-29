@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="860" viewBox="0 0 1440 860" font-family="Arial, Helvetica, sans-serif"><title>FluxGuard v1: esquemático integrado</title><defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1L9 5L1 9z" fill="context-stroke"/></marker></defs><rect width="1440" height="860" fill="#ffffff"/>
+<text x="20" y="34" font-size="18" font-weight="bold" fill="#111" text-anchor="start">FluxGuard v1 — esquemático integrado: SCT-013 + ASIC Tiny Tapeout + ESP32 + nube</text>
+<text x="20" y="56" font-size="12.5" font-weight="normal" fill="#555" text-anchor="start">Todos los niveles lógicos a 3.3 V. Las etiquetas en MAYÚSCULAS son redes: el mismo nombre en dos bloques = mismo cable.</text>
+<rect x="20" y="76" width="290" height="150" rx="8" fill="#FDF3E3" stroke="#C98A1B" stroke-width="1.2"/>
+<text x="32" y="98" font-size="14" font-weight="bold" fill="#633806" text-anchor="start">1 · Sensor SCT-013-030</text>
+<text x="32" y="120" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Núcleo partido: abraza SOLO la fase L1</text>
+<text x="32" y="139" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Salida 1 V RMS a 30 A (carga interna)</text>
+<text x="32" y="158" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Jack 3.5 mm: punta → VCT</text>
+<text x="102" y="177" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">manga → VMID</text>
+<text x="32" y="196" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Uno por fase en tableros trifásicos</text>
+<line x1="282" y1="92" x2="282" y2="214" stroke="#8B4513" stroke-width="5"/>
+<ellipse cx="282" cy="150" rx="17" ry="8" fill="none" stroke="#C98A1B" stroke-width="3"/>
+<rect x="20" y="246" width="290" height="196" rx="8" fill="#FDF3E3" stroke="#C98A1B" stroke-width="1.2"/>
+<text x="32" y="268" font-size="14" font-weight="bold" fill="#633806" text-anchor="start">2 · Polarización y protección</text>
+<text x="32" y="290" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">R1, R2 = 10 kΩ: 3V3 → VMID → GND</text>
+<text x="32" y="309" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">C1 = 10 µF en VMID  →  VMID = 1.65 V</text>
+<text x="32" y="328" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">R3 = 1 kΩ en serie: VCT → VS</text>
+<text x="32" y="347" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">D1 BAT54S: VS limitado a GND…3V3</text>
+<text x="32" y="366" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">C2 = 1 nF VS→GND (filtro ~160 kHz)</text>
+<text x="32" y="385" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">VS = 1.65 V ± 1.41 V pico a 30 A</text>
+<path d="M165 226 L165 244" fill="none" stroke="#444" stroke-width="1.4" marker-end="url(#a)"/>
+<rect x="340" y="76" width="300" height="226" rx="8" fill="#FDF3E3" stroke="#C98A1B" stroke-width="1.2"/>
+<text x="352" y="98" font-size="14" font-weight="bold" fill="#633806" text-anchor="start">3 · Comparador de ventana (rápido)</text>
+<text x="352" y="120" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">U1 TLV1702: doble, riel a riel, drenaje abierto</text>
+<text x="352" y="139" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">R4 4.7 kΩ · R5 24 kΩ · R6 4.7 kΩ (3V3→GND)</text>
+<text x="373" y="158" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">VH = 2.84 V     VL = 0.46 V</text>
+<text x="352" y="177" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">U1A: IN+ = VH, IN− = VS  (pico positivo)</text>
+<text x="352" y="196" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">U1B: IN+ = VS, IN− = VL  (pico negativo)</text>
+<text x="352" y="215" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Salidas unidas + R7 10 kΩ a 3V3 → PEAK_N</text>
+<text x="352" y="234" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Dispara si |VS−VMID| &gt; 1.19 V</text>
+<text x="373" y="253" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">≈ 25 A RMS senoidal (35.6 A pico)</text>
+<text x="352" y="272" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">R8 1 MΩ salida→IN+ (histéresis opcional)</text>
+<rect x="340" y="322" width="300" height="120" rx="8" fill="#FDF3E3" stroke="#C98A1B" stroke-width="1.2"/>
+<text x="352" y="344" font-size="14" font-weight="bold" fill="#633806" text-anchor="start">4 · Medición (camino lento)</text>
+<text x="352" y="366" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">VS → ESP32 GPIO34 (ADC1_CH6)</text>
+<text x="352" y="385" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">ESP32 calcula I RMS → registro 00</text>
+<text x="352" y="404" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Precisión: ADS1115 por I2C o ATM90E32</text>
+<text x="352" y="423" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">kWh requiere además medir voltaje</text>
+<path d="M310 300 L326 300 L326 190 L338 190" fill="none" stroke="#444" stroke-width="1.4" marker-end="url(#a)"/>
+<path d="M326 300 L326 380 L338 380" fill="none" stroke="#444" stroke-width="1.4" marker-end="url(#a)"/>
+<text x="316" y="294" font-size="12" font-weight="bold" fill="#633806" text-anchor="end">VS</text>
+<rect x="690" y="76" width="270" height="366" rx="10" fill="#F0EEFC" stroke="#6A5FCF" stroke-width="1.6"/>
+<text x="825.0" y="100" font-size="15" font-weight="bold" fill="#3C3489" text-anchor="middle">5 · ASIC FluxGuard</text>
+<text x="825.0" y="118" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="middle">tt_um_mari464_fluxguard · 10 MHz</text>
+<text x="700" y="158" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="start">ui[7:0]</text>
+<text x="700" y="173" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="start">DATA</text>
+<line x1="676" y1="162" x2="690" y2="162" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="700" y="196" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="start">uio[1:0]</text>
+<text x="700" y="211" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="start">ADDR</text>
+<line x1="676" y1="200" x2="690" y2="200" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="700" y="234" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="start">uio[2]</text>
+<text x="700" y="249" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="start">WR</text>
+<line x1="676" y1="238" x2="690" y2="238" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="700" y="272" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="start">uio[3]</text>
+<text x="700" y="287" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="start">CLR</text>
+<line x1="676" y1="276" x2="690" y2="276" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="700" y="310" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="start">uio[4]</text>
+<text x="700" y="325" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="start">PEAK_N</text>
+<line x1="676" y1="314" x2="690" y2="314" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="700" y="348" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="start">uio[5]</text>
+<text x="700" y="363" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="start">PK_MODE</text>
+<line x1="676" y1="352" x2="690" y2="352" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="700" y="386" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="start">clk</text>
+<text x="700" y="401" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="start">CLK</text>
+<line x1="676" y1="390" x2="690" y2="390" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="700" y="424" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="start">rst_n</text>
+<text x="700" y="439" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="start">RST_N</text>
+<line x1="676" y1="428" x2="690" y2="428" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="950" y="158" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="end">uo[0]</text>
+<text x="950" y="173" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="end">ALERT</text>
+<line x1="960" y1="162" x2="974" y2="162" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="950" y="196" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="end">uo[1]</text>
+<text x="950" y="211" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="end">OVER_I</text>
+<line x1="960" y1="200" x2="974" y2="200" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="950" y="234" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="end">uo[2]</text>
+<text x="950" y="249" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="end">OVER_T</text>
+<line x1="960" y1="238" x2="974" y2="238" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="950" y="272" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="end">uo[3]</text>
+<text x="950" y="287" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="end">UART_TX</text>
+<line x1="960" y1="276" x2="974" y2="276" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="950" y="310" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="end">uo[4]</text>
+<text x="950" y="325" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="end">LATCHED</text>
+<line x1="960" y1="314" x2="974" y2="314" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="950" y="348" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="end">uo[5]</text>
+<text x="950" y="363" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="end">UART_BUSY</text>
+<line x1="960" y1="352" x2="974" y2="352" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="950" y="386" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="end">uo[6]</text>
+<text x="950" y="401" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="end">HEARTBEAT</text>
+<line x1="960" y1="390" x2="974" y2="390" stroke="#6A5FCF" stroke-width="1.4"/>
+<text x="950" y="424" font-size="12" font-weight="normal" fill="#534AB7" text-anchor="end">uo[7]</text>
+<text x="950" y="439" font-size="12" font-weight="bold" fill="#3C3489" text-anchor="end">TRIP</text>
+<line x1="960" y1="428" x2="974" y2="428" stroke="#6A5FCF" stroke-width="1.4"/>
+<path d="M600 302 L600 314 L674 314" fill="none" stroke="#C98A1B" stroke-width="2" marker-end="url(#a)"/>
+<text x="608" y="309" font-size="11.5" font-weight="bold" fill="#633806" text-anchor="start">PEAK_N</text>
+<text x="672" y="166" font-size="11" font-weight="normal" fill="#0F6E56" text-anchor="end">◄ ESP32</text>
+<text x="672" y="204" font-size="11" font-weight="normal" fill="#0F6E56" text-anchor="end">◄ ESP32</text>
+<text x="672" y="242" font-size="11" font-weight="normal" fill="#0F6E56" text-anchor="end">◄ ESP32</text>
+<text x="672" y="280" font-size="11" font-weight="normal" fill="#0F6E56" text-anchor="end">◄ ESP32</text>
+<text x="672" y="356" font-size="11" font-weight="normal" fill="#0F6E56" text-anchor="end">◄ ESP32</text>
+<text x="672" y="394" font-size="11" font-weight="normal" fill="#0F6E56" text-anchor="end">◄ X1 10 MHz</text>
+<text x="672" y="432" font-size="11" font-weight="normal" fill="#0F6E56" text-anchor="end">◄ ESP32</text>
+<rect x="1130" y="76" width="290" height="366" rx="8" fill="#E6F5EF" stroke="#1D9E75" stroke-width="1.2"/>
+<text x="1142" y="98" font-size="14" font-weight="bold" fill="#085041" text-anchor="start">6 · ESP32-WROOM (nodo)</text>
+<text x="1142" y="120" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Salidas hacia el ASIC:</text>
+<text x="1156" y="139" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">DATA0-7 → GPIO 13,14,27,26,25,33,32,4</text>
+<text x="1156" y="158" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">ADDR0/1 → GPIO 16,17   WR → GPIO 18</text>
+<text x="1156" y="177" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">CLR → GPIO 19   PK_MODE → GPIO 23</text>
+<text x="1156" y="196" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">RST_N → GPIO 5</text>
+<text x="1142" y="215" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Entradas desde el ASIC:</text>
+<text x="1156" y="234" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">UART_TX → GPIO 35 (RX de UART1)</text>
+<text x="1156" y="253" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">ALERT → GPIO 36 (interrupción)</text>
+<text x="1142" y="272" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Sensores:</text>
+<text x="1156" y="291" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">VS → GPIO 34 (ADC)</text>
+<text x="1156" y="310" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">TMP117 temp. → I2C GPIO 21/22</text>
+<text x="1156" y="329" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Micro-GPS NMEA → GPIO 39 (RX UART2)</text>
+<text x="1142" y="348" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Radio: ESP-NOW / Wi-Fi (antena PCB)</text>
+<text x="1142" y="367" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Reloj CLK: oscilador X1 10 MHz</text>
+<text x="1156" y="386" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">(alternativa: LEDC en GPIO 15)</text>
+<path d="M976 162 L1128 162" fill="none" stroke="#1D9E75" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="982" y="157" font-size="11.5" font-weight="bold" fill="#085041" text-anchor="start">ALERT</text>
+<path d="M976 276 L1128 276" fill="none" stroke="#1D9E75" stroke-width="1.6" marker-end="url(#a)"/>
+<text x="982" y="271" font-size="11.5" font-weight="bold" fill="#085041" text-anchor="start">UART_TX</text>
+<text x="982" y="318" font-size="11" font-weight="normal" fill="#555" text-anchor="start">→ LED + 330 Ω</text>
+<text x="982" y="394" font-size="11" font-weight="normal" fill="#555" text-anchor="start">→ LED + 330 Ω</text>
+<text x="982" y="204" font-size="11" font-weight="normal" fill="#555" text-anchor="start">→ LED (opcional)</text>
+<text x="982" y="242" font-size="11" font-weight="normal" fill="#555" text-anchor="start">→ LED (opcional)</text>
+<text x="982" y="356" font-size="11" font-weight="normal" fill="#999" text-anchor="start">sin conectar</text>
+<rect x="690" y="470" width="370" height="150" rx="8" fill="#FCECEC" stroke="#C54343" stroke-width="1.2"/>
+<text x="702" y="492" font-size="14" font-weight="bold" fill="#791F1F" text-anchor="start">7 · Salida de disparo (TRIP)</text>
+<text x="702" y="514" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">uo[7] TRIP → R9 1 kΩ → Q1 MMBT2222 (base)</text>
+<text x="702" y="533" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Q1 → relé 5 V o SSR/optoacoplador</text>
+<text x="702" y="552" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">D2 1N4148 en antiparalelo con la bobina</text>
+<text x="702" y="571" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Relé → bobina de disparo del interruptor</text>
+<text x="702" y="590" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Instalación dentro del tablero: electricista</text>
+<path d="M976 428 L985 428 L985 455 L875 455 L875 468" fill="none" stroke="#C54343" stroke-width="2" marker-end="url(#a)"/>
+<text x="990" y="432" font-size="11.5" font-weight="bold" fill="#791F1F" text-anchor="start">TRIP</text>
+<rect x="20" y="470" width="620" height="150" rx="8" fill="#F4F3EF" stroke="#8A8880" stroke-width="1.2"/>
+<text x="32" y="492" font-size="14" font-weight="bold" fill="#444441" text-anchor="start">8 · Alimentación</text>
+<text x="32" y="514" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">5 V: fuente aislada HLK-PM01 (desde el tablero) o USB-C</text>
+<text x="32" y="533" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">U2 AMS1117-3.3 → 3V3 para ESP32, U1, sensores y E/S del ASIC</text>
+<text x="32" y="552" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">ASIC: 1.8 V de núcleo y selección de proyecto los da la placa demo de TT</text>
+<text x="32" y="571" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">v1 recomendada: esta tarjeta como placa hija de la demo board de Tiny Tapeout</text>
+<text x="32" y="590" font-size="12.5" font-weight="normal" fill="#333" text-anchor="start">Desacoplo: 100 nF por cada CI + 10 µF por riel</text>
+<rect x="20" y="650" width="1400" height="190" rx="10" fill="#F7FBF9" stroke="#1D9E75" stroke-dasharray="6 4" stroke-width="1.2"/>
+<text x="36" y="674" font-size="14" font-weight="bold" fill="#085041" text-anchor="start">9 · Camino a la nube (broadcast por publicación/suscripción)</text>
+<rect x="40" y="694" width="250" height="62" rx="8" fill="#E6F5EF" stroke="#1D9E75" stroke-width="1.2"/>
+<text x="165" y="720" font-size="14" font-weight="bold" fill="#085041" text-anchor="middle">Nodo FluxGuard</text>
+<text x="165" y="740" font-size="12" font-weight="normal" fill="#0F6E56" text-anchor="middle">ESP32 del bloque 6</text>
+<path d="M292 725 L388 725" fill="none" stroke="#1D9E75" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="390" y="694" width="250" height="62" rx="8" fill="#E6F5EF" stroke="#1D9E75" stroke-width="1.2"/>
+<text x="515" y="720" font-size="14" font-weight="bold" fill="#085041" text-anchor="middle">Gateway ESP32</text>
+<text x="515" y="740" font-size="12" font-weight="normal" fill="#0F6E56" text-anchor="middle">ESP-NOW → Wi-Fi/LTE</text>
+<path d="M642 725 L738 725" fill="none" stroke="#1D9E75" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="740" y="694" width="250" height="62" rx="8" fill="#E6F5EF" stroke="#1D9E75" stroke-width="1.2"/>
+<text x="865" y="720" font-size="14" font-weight="bold" fill="#085041" text-anchor="middle">Broker MQTT</text>
+<text x="865" y="740" font-size="12" font-weight="normal" fill="#0F6E56" text-anchor="middle">fluxguard/&lt;sitio&gt;/&lt;nodo&gt;/…</text>
+<path d="M992 725 L1088 725" fill="none" stroke="#1D9E75" stroke-width="1.6" marker-end="url(#a)"/>
+<rect x="1090" y="694" width="250" height="62" rx="8" fill="#E6F5EF" stroke="#1D9E75" stroke-width="1.2"/>
+<text x="1215" y="720" font-size="14" font-weight="bold" fill="#085041" text-anchor="middle">Suscriptores</text>
+<text x="1215" y="740" font-size="12" font-weight="normal" fill="#0F6E56" text-anchor="middle">Dashboard · alertas · BD</text>
+<text x="40" y="782" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Telemetría: …/medicion  (QoS 0, cada 1-5 s)  ·  Alarmas: …/alerta  (QoS 1, al llegar una trama con FLAGS ≠ 0)  ·  Estado: …/estado  (Last Will = "offline")</text>
+<text x="40" y="802" font-size="12" font-weight="normal" fill="#333" text-anchor="start">Trama UART ASIC→ESP32 (115200 8N1): A5 · CORRIENTE · TEMPERATURA · FLAGS · CHECKSUM     FLAGS = {0,0,0, TRIP, OVER_PK, LATCHED, OVER_T, OVER_I}</text>
+<text x="40" y="822" font-size="12" font-weight="normal" fill="#333" text-anchor="start">El ESP32 agrega GPS, marca de tiempo e ID del nodo y publica en JSON. El disparo TRIP ocurre en ~1.4 µs en el ASIC, sin esperar a la nube.</text></svg>
